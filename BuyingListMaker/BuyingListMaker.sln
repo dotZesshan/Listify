@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyingListMaker", "BuyingListMaker\BuyingListMaker.csproj", "{87FB6361-627C-430B-853E-EDA09206A5DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		App Store|Any CPU = App Store|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.App Store|Any CPU.ActiveCfg = App Store|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.App Store|Any CPU.Build.0 = App Store|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.App Store|Any CPU.Deploy.0 = App Store|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87FB6361-627C-430B-853E-EDA09206A5DE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19513CCF-BD86-41CB-8A26-8155BDB3B096}
+	EndGlobalSection
+EndGlobal
