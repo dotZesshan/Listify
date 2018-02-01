@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.Listify" android:versionName="1.2" android:installLocation="auto" android:versionCode="3">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.Listify" android:versionName="1.3" android:installLocation="auto" android:versionCode="4">
   <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
   <application android:label="Listify" android:icon="@drawable/listify" android:name="android.app.Application" android:allowBackup="true">
     <activity android:label="Listify" android:name="md5f00885e23637768116688c55140b3dc8.ItemsActivity" />

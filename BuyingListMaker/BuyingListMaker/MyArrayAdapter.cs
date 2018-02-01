@@ -16,14 +16,6 @@ namespace BuyingListMaker
         private readonly List<int> _markingList;
         private List<int> _priceList;
 
-        public MyArrayAdapter(Activity context, List<string> items, List<int> priceList) : base()
-        {
-            _context = context;
-            _markingList = null;
-            _items = new List<string>(items);
-            _priceList = new List<int>(priceList);
-        }
-
         public MyArrayAdapter(Activity context, List<string> items, List<int> markingList, List<int> priceList) : base()
         {
             _context = context;
@@ -46,9 +38,7 @@ namespace BuyingListMaker
                 {
                     view = _context.LayoutInflater.Inflate(Resource.Layout.MyListLayout1, parent, false);
                 }
-
                 
-
                 var nameView = view.FindViewById<TextView>(Resource.Id.ItemName);
                 var priceView = view.FindViewById<TextView>(Resource.Id.ItemPrice);
                 if (_markingList != null && _markingList.Count>position && _markingList[position] > 0)
@@ -87,6 +77,11 @@ namespace BuyingListMaker
         public void RemoveItem(int position)
         {
             _items.RemoveAt(position);
+        }
+
+        public void SetItemName(int position, string newListName)
+        {
+            _items[position] = newListName;
         }
 
         public List<string> GetAllItems()

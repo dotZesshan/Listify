@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Preferences;
 using System.Threading;
 using Android.Util;
+using Android.Text;
 
 namespace BuyingListMaker
 {
@@ -17,7 +18,7 @@ namespace BuyingListMaker
     {
         ListView _listView;
         private Button _button;
-        private MyArrayAdapter _adapter;
+        private MyArrayAdapter1 _adapter;
         private bool _init;
 
         protected override void OnCreate(Bundle bundle)
@@ -45,19 +46,19 @@ namespace BuyingListMaker
             {
                 InitActivity();
             }
-            else
-            {
-                ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
-                var priceList = _adapter.GetAllItems().Select(s => Convert.ToInt32(prefs.GetString(s + "total", "0"))).ToList();
-                if (priceList != null)
-                {
-                    _adapter.ChangeTotalPriceList(priceList);
-                }
-                RunOnUiThread(() =>
-                {
-                    _adapter.NotifyDataSetChanged();
-                });
-            }
+            //else
+            //{
+            //    ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+            //    var priceList = _adapter.GetAllItems().Select(s => Convert.ToInt32(prefs.GetString(s + "total", "0"))).ToList();
+            //    if (priceList != null)
+            //    {
+            //        _adapter.ChangeTotalPriceList(priceList);
+            //    }
+            //    RunOnUiThread(() =>
+            //    {
+            //        _adapter.NotifyDataSetChanged();
+            //    });
+            //}
         }
 
         private void InitActivity()
@@ -67,16 +68,82 @@ namespace BuyingListMaker
             var storedItemString = prefs.GetString("Lists", null);
             var storedItemListData = !string.IsNullOrEmpty(storedItemString) ? storedItemString.Split(new[] { "," }, StringSplitOptions.None).ToList() : null;
             var items = storedItemListData ?? new List<string>();
-            var priceList = items.Select(s => Convert.ToInt32(prefs.GetString(s + "total", "0"))).ToList();
+            //var priceList = items.Select(s => Convert.ToInt32(prefs.GetString(s + "total", "0"))).ToList();
             _listView = FindViewById<ListView>(Resource.Id.ListsView);
             _button = FindViewById<Button>(Resource.Id.ListButton);
             _button.Click += ButtonOnClick;
-            _listView.Adapter = _adapter = new MyArrayAdapter(this, items, priceList);
+            _listView.Adapter = _adapter = new MyArrayAdapter1(this, items);
             _listView.ItemClick += ListViewOnItemClick;
             _listView.ItemLongClick += ListViewOnItemLongClick;
         }
 
         private void ListViewOnItemLongClick(object sender, AdapterView.ItemLongClickEventArgs itemLongClickEventArgs)
+        {
+            try
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                var optionBox = builder.Create();
+                optionBox.SetTitle("Choose Operation");
+                optionBox.SetIcon(Resource.Drawable.Icon);
+                optionBox.SetMessage("Select one option");
+                var view = optionBox.LayoutInflater.Inflate(Resource.Layout.ListOptions, null);
+                optionBox.SetView(view);
+                optionBox.SetCancelable(false);
+
+                view.FindViewById<Button>(Resource.Id.EditListNameButton).Click += new EventHandler((s, e) => EditListNameOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
+                view.FindViewById<Button>(Resource.Id.ListDeleteButton).Click += new EventHandler((s, e) => DeleteOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
+                optionBox.SetButton("Cancle", (o, args) => { });
+                optionBox.Show();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Exception:", ex.Message + "|StackTrace:" + ex.StackTrace);
+            }
+        }
+
+        private void EditListNameOptionClicked(object s, EventArgs e, int position, AlertDialog optionBox)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            var editBox = builder.Create();
+            editBox.SetTitle("Update Category Name");
+            editBox.SetIcon(Resource.Drawable.Icon);
+            editBox.SetMessage("Enter New Name: ");
+            var view = editBox.LayoutInflater.Inflate(Resource.Layout.LimitedInputBoxString, null);
+            var inputTextField = view.FindViewById<EditText>(Resource.Id.LimitedEditTextString);
+            editBox.SetView(view);
+            editBox.SetCancelable(false);
+            
+            editBox.SetButton("Done", (o, args) =>
+            {
+                var oldListName = (string)_listView.GetItemAtPosition(position);
+                if (!string.IsNullOrEmpty(oldListName))
+                {
+                    var newListName = inputTextField.Text;
+                    if (!string.IsNullOrEmpty(newListName))
+                    {
+                        _adapter.SetItemName(position, newListName);
+                        ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+                        var storedItemString = prefs.GetString(oldListName, null);
+                        var markingListString = prefs.GetString(oldListName + "MarkingList", null);
+                        var priceListString = prefs.GetString(oldListName + "PriceList", null);
+
+                        ISharedPreferencesEditor editor = prefs.Edit();
+                        editor.PutString(newListName, storedItemString);
+                        editor.PutString(newListName + "MarkingList", markingListString);
+                        editor.PutString(newListName + "PriceList", priceListString);
+                        //editor.PutString(_listName + "total", Convert.ToString(_adapter.GetPriceTotal()));
+                        editor.Apply();    // applies changes synchronously on older APIs
+                    }
+                    
+                    RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
+                }
+            });
+            editBox.SetButton2("Cancle", (o, args) => { });
+            editBox.Show();
+            optionBox.Cancel();
+        }
+
+        private void DeleteOptionClicked(object s, EventArgs e, int position, AlertDialog optionBox)
         {
             try
             {
@@ -88,16 +155,16 @@ namespace BuyingListMaker
                 alterDialog.SetCancelable(false);
                 alterDialog.SetButton("Yes", (o, args) =>
                 {
-                    var item = _listView.GetItemAtPosition(itemLongClickEventArgs.Position);
+                    var item = _listView.GetItemAtPosition(position);
                     if (item != null)
                     {
-                        _adapter.RemoveItem(itemLongClickEventArgs.Position);
-                        _adapter.RemovePrice(itemLongClickEventArgs.Position);
+                        _adapter.RemoveItem(position);
                         RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
                     }
                 });
                 alterDialog.SetButton2("No", (o, args) => { });
                 alterDialog.Show();
+                optionBox.Cancel();
             }
             catch (Exception ex)
             {
@@ -114,7 +181,6 @@ namespace BuyingListMaker
                 if (!string.IsNullOrEmpty(text) && !string.IsNullOrWhiteSpace(text))
                 {
                     _adapter.AddItem(text);
-                    _adapter.AddPrice(0);
                     RunOnUiThread(() =>
                     {
                         _adapter.NotifyDataSetChanged();
@@ -123,34 +189,6 @@ namespace BuyingListMaker
                     Toast.MakeText(this, "List Added:" + text, ToastLength.Short).Show();
                 }
 
-                #region Commented useful code
-                //AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                //var alterDialog = builder.Create();
-                //alterDialog.SetTitle("AddItem");
-                //alterDialog.SetIcon(Resource.Drawable.Icon);
-                //alterDialog.SetMessage("Enter Item: ");
-                //var inputTextField = new EditText(this);
-                //inputTextField.SetTextSize(ComplexUnitType.Dip, 17);
-                //inputTextField.SetText("", TextView.BufferType.Editable);
-                //alterDialog.SetView(inputTextField);
-                //alterDialog.SetCancelable(false);
-
-                //alterDialog.SetButton("AddItem", (o, args) =>
-                //{
-                //    if (!_items.Contains(inputTextField.Text))
-                //    {
-                //        _items.AddItem(inputTextField.Text);
-                //        _adapter.AddItem(inputTextField.Text);
-                //        RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
-                //    }
-                //    else
-                //    {
-                //        Toast.MakeText(this, "Item already exist!", ToastLength.Short).Show();
-                //    }
-                //});
-                //alterDialog.SetButton2("Cancle", (o, args) => { });
-                //alterDialog.Show(); 
-                #endregion
             }
             catch (Exception ex)
             {
