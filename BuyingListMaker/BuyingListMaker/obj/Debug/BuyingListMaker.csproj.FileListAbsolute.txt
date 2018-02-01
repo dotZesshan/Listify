@@ -16,7 +16,27 @@ C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\Buyi
 C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Debug\BuyingListMaker.csprojResolveAssemblyReference.cache
 C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll.mdb
 C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Debug\android\assets\BuyingListMaker.dll.mdb
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.pdb
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\com.Listify.apk
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\com.Listify-Signed.apk
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\BuyingListMaker.csproj.CoreCompileInputs.cache
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\BuyingListMaker.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\BuyingListMaker.pdb
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\android\bin\com.Listify.apk
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\items.xml
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\mylistlayout1.xml
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\main.xml
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\values\strings.xml
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\drawable\icon.png
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\drawable\listify.png
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\R.cs.flag
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\uploadflags.txt
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\BuyingListMaker.csprojResolveAssemblyReference.cache
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\options.xml
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll.mdb
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\android\assets\BuyingListMaker.dll.mdb
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll
 bin\Debug\Mono.Android.pdb
 bin\Debug\mscorlib.pdb
 bin\Debug\System.Core.pdb

@@ -14,8 +14,8 @@
             android:layout_height="match_parent"
             android:id="@+id/ItemEditText"
             android:maxLines="1"
-            android:maxLength="30"
-            android:hint="Add Items"/>
+            android:maxLength="20"
+            android:hint="Add Items" />
         <Button
             android:text="+"
             android:id="@+id/ItemButton"
@@ -24,9 +24,7 @@
             android:layout_weight=".2" />
     </LinearLayout>
     <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/ItemListView" />
 </LinearLayout>

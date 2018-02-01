@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Android.App;
 using Android.Graphics;
 using Android.Views;
@@ -7,29 +9,32 @@ using Java.Lang;
 
 namespace BuyingListMaker
 {
-    public class MyArrayAdapter : BaseAdapter<string>
+    public class MyArrayAdapter : BaseAdapter
     {
         private readonly List<string> _items;
         private readonly Activity _context;
         private readonly List<int> _markingList;
+        private List<int> _priceList;
 
-        public MyArrayAdapter(Activity context, List<string> items) : base()
+        public MyArrayAdapter(Activity context, List<string> items, List<int> priceList) : base()
         {
             _context = context;
             _markingList = null;
             _items = new List<string>(items);
+            _priceList = new List<int>(priceList);
         }
 
-        public MyArrayAdapter(Activity context, List<string> items, List<int> markingList) : base()
+        public MyArrayAdapter(Activity context, List<string> items, List<int> markingList, List<int> priceList) : base()
         {
             _context = context;
-            _markingList = markingList;
+            _markingList = new List<int>( markingList);
             _items = new List<string>(items);
+            _priceList = new List<int>(priceList);
         }
 
         public override long GetItemId(int position)
         {
-            return position;
+            return Convert.ToInt64(position);
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
@@ -39,18 +44,23 @@ namespace BuyingListMaker
                 View view = convertView; // re-use an existing view, if one is available
                 if (view == null) // otherwise create a new one
                 {
-                    view = _context.LayoutInflater.Inflate(Android.Resource.Layout.SimpleListItem1, null);
+                    view = _context.LayoutInflater.Inflate(Resource.Layout.MyListLayout1, parent, false);
                 }
 
+                
+
+                var nameView = view.FindViewById<TextView>(Resource.Id.ItemName);
+                var priceView = view.FindViewById<TextView>(Resource.Id.ItemPrice);
                 if (_markingList != null && _markingList.Count>position && _markingList[position] > 0)
                 {
-                    view.FindViewById<TextView>(Android.Resource.Id.Text1).Typeface = ItemsActivity.STRIKE_THROUGH;
+                    nameView.Typeface = ItemsActivity.STRIKE_THROUGH;
                 }
                 else
                 {
-                    view.FindViewById<TextView>(Android.Resource.Id.Text1).Typeface = Typeface.Default;
+                    nameView.Typeface = Typeface.Default;
                 }
-                view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = _items[position];
+                nameView.Text = _items[position];
+                if (_priceList != null ) priceView.Text = _priceList[position] > 0 ? Convert.ToString(_priceList[position]) : "0";
                 return view;
             }
             catch (System.Exception ex)
@@ -64,9 +74,9 @@ namespace BuyingListMaker
             get { return _items.Count; }
         }
 
-        public override string this[int position]
+        public override Java.Lang.Object GetItem(int position)
         {
-            get { return _items[position]; }
+            return _items[position]; ;
         }
 
         public void AddItem(string text)
@@ -74,12 +84,7 @@ namespace BuyingListMaker
             _items.Add(text);
         }
 
-        public void SetItem(int position, string text)
-        {
-            _items[position] = text;
-        }
-
-        public void RemoveItem(int position, Object item)
+        public void RemoveItem(int position)
         {
             _items.RemoveAt(position);
         }
@@ -108,6 +113,39 @@ namespace BuyingListMaker
         public List<int> GetAllMarksMapping()
         {
             return _markingList;
+        }
+
+        public void AddPrice(int value)
+        {
+            _priceList?.Add(value);
+        }
+
+        public void SetPrice(int position, int value)
+        {
+            if (_priceList != null)
+                _priceList[position] = value;
+        }
+
+        public void RemovePrice(int position)
+        {
+            _priceList?.RemoveAt(position);
+        }
+
+        public List<int> GetAllPriceItems()
+        {
+            return _priceList;
+        }
+
+        public int GetPriceTotal()
+        {
+            if (_priceList != null)
+                return Convert.ToInt32(_priceList.Sum(item => item));
+            return 0;
+        }
+
+        public void ChangeTotalPriceList(List<int> priceList)
+        {
+            _priceList = new List<int>(priceList);
         }
     }
 }

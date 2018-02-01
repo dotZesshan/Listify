@@ -1,7 +1,7 @@
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\BuyingListMaker.dll
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\Java.Interop.dll
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\Mono.Android.dll
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\mscorlib.dll
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\System.Core.dll
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\System.dll
-C:\Users\zeeshan.khan\Documents\Visual Studio 2015\Projects\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\System.Runtime.Serialization.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\BuyingListMaker.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\Java.Interop.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\Mono.Android.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\mscorlib.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\System.Core.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\System.dll
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\System.Runtime.Serialization.dll

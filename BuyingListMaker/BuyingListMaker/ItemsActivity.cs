@@ -42,6 +42,8 @@ namespace BuyingListMaker
             ISharedPreferencesEditor editor = prefs.Edit();
             editor.PutString(_listName, string.Join(",", _adapter.GetAllItems()));
             editor.PutString(_listName + "MarkingList", string.Join(",", _adapter.GetAllMarksMapping()));
+            editor.PutString(_listName + "PriceList", string.Join(",", _adapter.GetAllPriceItems()));
+            editor.PutString(_listName + "total", Convert.ToString(_adapter.GetPriceTotal()));
             editor.Apply();    // applies changes synchronously on older APIs
         }
 
@@ -59,17 +61,23 @@ namespace BuyingListMaker
             _init = true;
             STRIKE_THROUGH = Typeface.CreateFromAsset(Assets, "bptypewritestrikethrough.ttf");
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+
             var storedItemString = prefs.GetString(_listName, null);
             var storedItemListData = !string.IsNullOrEmpty(storedItemString) ? storedItemString.Split(new[] { "," }, StringSplitOptions.None).ToList() : null;
+            var items = storedItemListData ?? new List<string>();
+
             var markingListString = prefs.GetString(_listName + "MarkingList", null);
             var storedMarkingListData = !string.IsNullOrEmpty(markingListString) ? markingListString.Split(new[] { "," }, StringSplitOptions.None).Select(s => Convert.ToInt32(s)).ToList() : null;
-            var items = storedItemListData ?? new List<string>();
             var markingElements = storedMarkingListData ?? new List<int>();
+
+            var priceListString = prefs.GetString(_listName + "PriceList", null);
+            var priceListData = !string.IsNullOrEmpty(priceListString) ? priceListString.Split(new[] { "," }, StringSplitOptions.None).Select(s => Convert.ToInt32(s)).ToList() : null;
+            var priceList = priceListData ?? new List<int>();
 
             _listView = FindViewById<ListView>(Resource.Id.ItemListView);
             _button = FindViewById<Button>(Resource.Id.ItemButton);
             _button.Click += ButtonOnClick;
-            _listView.Adapter = _adapter = new MyArrayAdapter(this, items, markingElements);
+            _listView.Adapter = _adapter = new MyArrayAdapter(this, items, markingElements, priceList);
             _listView.ItemClick += ListViewOnItemClick;
             _listView.ItemLongClick += ListViewOnItemLongClick;
 
@@ -80,27 +88,74 @@ namespace BuyingListMaker
             try
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                var alterDialog = builder.Create();
-                alterDialog.SetTitle("Delete");
-                alterDialog.SetIcon(Resource.Drawable.Icon);
-                alterDialog.SetMessage("Do you want to delete this item?");
-                alterDialog.SetCancelable(false);
-                alterDialog.SetButton("Yes", (o, args) =>
-                {
-                    var item = _listView.GetItemAtPosition(itemLongClickEventArgs.Position);
-                    if (item != null)
-                    {
-                        _adapter.RemoveItem(itemLongClickEventArgs.Position, item);
-                        RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
-                    }
-                });
-                alterDialog.SetButton2("No", (o, args) => { });
-                alterDialog.Show();
+                var optionBox = builder.Create();
+                optionBox.SetTitle("Choose Operation");
+                optionBox.SetIcon(Resource.Drawable.Icon);
+                optionBox.SetMessage("Select one option");
+                var view = optionBox.LayoutInflater.Inflate(Resource.Layout.Options, null);
+                optionBox.SetView(view);
+                optionBox.SetCancelable(false);
+                view.FindViewById<Button>(Resource.Id.PriceEdit).Click += new EventHandler((s, e) => EditPriceOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
+                view.FindViewById<Button>(Resource.Id.Delete).Click += new EventHandler((s, e) => DeleteOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
+                optionBox.SetButton("Cancle", (o, args) => { });
+                optionBox.Show();
             }
             catch (Exception ex)
             {
                 Log.Error("Exception:", ex.Message +  "|StackTrace:"+ex.StackTrace);
             }
+        }
+
+        private void EditPriceOptionClicked(object s, EventArgs e, int position, AlertDialog optionBox)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            var editBox = builder.Create();
+            editBox.SetTitle("AddItem");
+            editBox.SetIcon(Resource.Drawable.Icon);
+            editBox.SetMessage("Enter Item: ");
+            var inputTextField = new EditText(this);
+            inputTextField.SetTextSize(ComplexUnitType.Dip, 17);
+            inputTextField.SetText("", TextView.BufferType.Editable);
+            inputTextField.InputType = Android.Text.InputTypes.ClassNumber;
+            editBox.SetView(inputTextField);
+            editBox.SetCancelable(false);
+
+            editBox.SetButton("Update Price", (o, args) =>
+            {
+                var item = _listView.GetItemAtPosition(position);
+                if (item != null)
+                {
+                    _adapter.SetPrice(position, !string.IsNullOrEmpty(inputTextField.Text) ? Convert.ToInt32(inputTextField.Text) : 0);
+                    RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
+                }
+            });
+            editBox.SetButton2("Cancle", (o, args) => { });
+            editBox.Show();
+            optionBox.Cancel();
+        }
+
+        private void DeleteOptionClicked(object s, EventArgs e, int position, AlertDialog optionBox)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            var deleteBox = builder.Create();
+            deleteBox.SetTitle("Delete");
+            deleteBox.SetIcon(Resource.Drawable.Icon);
+            deleteBox.SetMessage("Do you want to delete this item?");
+            deleteBox.SetCancelable(false);
+            deleteBox.SetButton("Yes", (p, argsp) =>
+            {
+                var item = _listView.GetItemAtPosition(position);
+                if (item != null)
+                {
+                    _adapter.RemovePrice(position);
+                    _adapter.RemoveMarkMap(position);
+                    _adapter.RemoveItem(position);
+                    RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
+                }
+            });
+            deleteBox.SetButton2("No", (p, argsp) => { });
+            deleteBox.Show();
+            optionBox.Cancel();
         }
 
         private void ButtonOnClick(object sender, EventArgs eventArgs)
@@ -111,6 +166,7 @@ namespace BuyingListMaker
                 var text = inputTextField.Text;
                 if (!string.IsNullOrEmpty(text) && !string.IsNullOrWhiteSpace(text))
                 {
+                    _adapter.AddPrice(0);
                     _adapter.AddMarkMap(-1);
                     _adapter.AddItem(text);
                     RunOnUiThread(() =>
@@ -121,34 +177,6 @@ namespace BuyingListMaker
                     Toast.MakeText(this, "List Added:" + text, ToastLength.Short).Show();
                 }
 
-                #region Commented useful code
-                //AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                //var alterDialog = builder.Create();
-                //alterDialog.SetTitle("AddItem");
-                //alterDialog.SetIcon(Resource.Drawable.Icon);
-                //alterDialog.SetMessage("Enter Item: ");
-                //var inputTextField = new EditText(this);
-                //inputTextField.SetTextSize(ComplexUnitType.Dip, 17);
-                //inputTextField.SetText("", TextView.BufferType.Editable);
-                //alterDialog.SetView(inputTextField);
-                //alterDialog.SetCancelable(false);
-
-                //alterDialog.SetButton("AddItem", (o, args) =>
-                //{
-                //    if (!_items.Contains(inputTextField.Text))
-                //    {
-                //        _items.AddItem(inputTextField.Text);
-                //        _adapter.AddItem(inputTextField.Text);
-                //        RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
-                //    }
-                //    else
-                //    {
-                //        Toast.MakeText(this, "Item already exist!", ToastLength.Short).Show();
-                //    }
-                //});
-                //alterDialog.SetButton2("Cancle", (o, args) => { });
-                //alterDialog.Show(); 
-                #endregion
             }
             catch (Exception ex)
             {
@@ -161,20 +189,22 @@ namespace BuyingListMaker
             var item = _listView.GetItemAtPosition(itemClickEventArgs.Position);
             if (item != null)
             {
-                var textView = (TextView)_adapter.GetView(itemClickEventArgs.Position, itemClickEventArgs.View, null);
+                var view = _adapter.GetView(itemClickEventArgs.Position, itemClickEventArgs.View, null);
+                var textViewName = (TextView)view.FindViewById<TextView>(Resource.Id.ItemName);
+                var textViewPrice = (TextView)view.FindViewById<TextView>(Resource.Id.ItemPrice);
                 Typeface font = Typeface.Default;
                 _adapter.SetMarkMap(itemClickEventArgs.Position, -1 * (itemClickEventArgs.Position + 1));
-                if (textView.Typeface == Typeface.Default)
+                if (textViewName.Typeface == Typeface.Default)
                 {
                     _adapter.SetMarkMap(itemClickEventArgs.Position, 1 * (itemClickEventArgs.Position + 1));
                     font = STRIKE_THROUGH;
                 }
-                textView.Typeface = font;
+                textViewName.Typeface = font;
                 RunOnUiThread(() =>
                 {
                     _adapter.NotifyDataSetChanged();
                 });
-                Toast toast = Toast.MakeText(this, item.ToString(), ToastLength.Short);
+                Toast toast = Toast.MakeText(this, "Item:" + item.ToString() + "| Price:"+ textViewPrice.Text, ToastLength.Short);
                 toast.Show();
             }
         }

@@ -44,7 +44,20 @@ namespace BuyingListMaker
             if (!_init)
             {
                 InitActivity();
-            } 
+            }
+            else
+            {
+                ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+                var priceList = _adapter.GetAllItems().Select(s => Convert.ToInt32(prefs.GetString(s + "total", "0"))).ToList();
+                if (priceList != null)
+                {
+                    _adapter.ChangeTotalPriceList(priceList);
+                }
+                RunOnUiThread(() =>
+                {
+                    _adapter.NotifyDataSetChanged();
+                });
+            }
         }
 
         private void InitActivity()
@@ -54,11 +67,11 @@ namespace BuyingListMaker
             var storedItemString = prefs.GetString("Lists", null);
             var storedItemListData = !string.IsNullOrEmpty(storedItemString) ? storedItemString.Split(new[] { "," }, StringSplitOptions.None).ToList() : null;
             var items = storedItemListData ?? new List<string>();
-         
+            var priceList = items.Select(s => Convert.ToInt32(prefs.GetString(s + "total", "0"))).ToList();
             _listView = FindViewById<ListView>(Resource.Id.ListsView);
             _button = FindViewById<Button>(Resource.Id.ListButton);
             _button.Click += ButtonOnClick;
-            _listView.Adapter = _adapter = new MyArrayAdapter(this, items);
+            _listView.Adapter = _adapter = new MyArrayAdapter(this, items, priceList);
             _listView.ItemClick += ListViewOnItemClick;
             _listView.ItemLongClick += ListViewOnItemLongClick;
         }
@@ -78,8 +91,8 @@ namespace BuyingListMaker
                     var item = _listView.GetItemAtPosition(itemLongClickEventArgs.Position);
                     if (item != null)
                     {
-                        _adapter.RemoveMarkMap(itemLongClickEventArgs.Position);
-                        _adapter.RemoveItem(itemLongClickEventArgs.Position, item);
+                        _adapter.RemoveItem(itemLongClickEventArgs.Position);
+                        _adapter.RemovePrice(itemLongClickEventArgs.Position);
                         RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
                     }
                 });
@@ -101,6 +114,7 @@ namespace BuyingListMaker
                 if (!string.IsNullOrEmpty(text) && !string.IsNullOrWhiteSpace(text))
                 {
                     _adapter.AddItem(text);
+                    _adapter.AddPrice(0);
                     RunOnUiThread(() =>
                     {
                         _adapter.NotifyDataSetChanged();
@@ -147,6 +161,7 @@ namespace BuyingListMaker
         private void ListViewOnItemClick(object sender, AdapterView.ItemClickEventArgs itemClickEventArgs)
         {
             var item = _listView.GetItemAtPosition(itemClickEventArgs.Position);
+
             if (item != null)
             {
                 Log.Info("ListViewOnItemClick", item.ToString());

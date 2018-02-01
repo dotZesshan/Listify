@@ -15,18 +15,24 @@ public final class R {
         public static final int listify=0x7f020001;
     }
     public static final class id {
+        public static final int Delete=0x7f05000b;
         public static final int ItemButton=0x7f050002;
         public static final int ItemEditText=0x7f050001;
         public static final int ItemLayout=0x7f050000;
         public static final int ItemListView=0x7f050003;
+        public static final int ItemName=0x7f050008;
+        public static final int ItemPrice=0x7f050009;
         public static final int ListButton=0x7f050006;
         public static final int ListEditText=0x7f050005;
         public static final int ListLayout=0x7f050004;
         public static final int ListsView=0x7f050007;
+        public static final int PriceEdit=0x7f05000a;
     }
     public static final class layout {
         public static final int items=0x7f030000;
         public static final int main=0x7f030001;
+        public static final int mylistlayout1=0x7f030002;
+        public static final int options=0x7f030003;
     }
     public static final class string {
         public static final int ApplicationName=0x7f040001;

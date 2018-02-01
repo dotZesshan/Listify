@@ -63,6 +63,9 @@ namespace BuyingListMaker
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f05000b
+			public const int Delete = 2131034123;
+			
 			// aapt resource value: 0x7f050002
 			public const int ItemButton = 2131034114;
 			
@@ -75,6 +78,12 @@ namespace BuyingListMaker
 			// aapt resource value: 0x7f050003
 			public const int ItemListView = 2131034115;
 			
+			// aapt resource value: 0x7f050008
+			public const int ItemName = 2131034120;
+			
+			// aapt resource value: 0x7f050009
+			public const int ItemPrice = 2131034121;
+			
 			// aapt resource value: 0x7f050006
 			public const int ListButton = 2131034118;
 			
@@ -86,6 +95,9 @@ namespace BuyingListMaker
 			
 			// aapt resource value: 0x7f050007
 			public const int ListsView = 2131034119;
+			
+			// aapt resource value: 0x7f05000a
+			public const int PriceEdit = 2131034122;
 			
 			static Id()
 			{
@@ -105,6 +117,12 @@ namespace BuyingListMaker
 			
 			// aapt resource value: 0x7f030001
 			public const int Main = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int MyListLayout1 = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int Options = 2130903043;
 			
 			static Layout()
 			{
