@@ -89,6 +89,11 @@ namespace BuyingListMaker
             return _items;
         }
 
+        public int GetListCount()
+        {
+            return _items.Count;
+        }
+
         public void AddMarkMap(int mark)
         {
             _markingList?.Add(mark * (_markingList.Count+1));

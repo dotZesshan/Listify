@@ -15,7 +15,7 @@
             android:id="@+id/ListEditText"
             android:maxLines="1"
             android:maxLength="30"
-            android:hint="Add Category" />
+            android:hint="Create New List" />
         <Button
             android:text="+"
             android:id="@+id/ListButton"
@@ -34,7 +34,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginLeft="10dp"
             android:id="@+id/ListLable"
-            android:text="Categories" />
+            android:text="MyLists" />
     <!--<TextView
             android:layout_weight=".2"
             android:layout_width="0dp"

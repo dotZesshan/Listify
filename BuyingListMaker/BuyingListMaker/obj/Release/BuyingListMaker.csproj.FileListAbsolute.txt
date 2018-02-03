@@ -37,9 +37,9 @@ C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\o
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\res\layout\limitedinputboxnumber.xml
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\res\layout\mylistlayout2.xml
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\res\drawable\border.xml
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\BuyingListMaker.csprojResolveAssemblyReference.cache
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Release\BuyingListMaker.dll.mdb
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\android\assets\BuyingListMaker.dll.mdb
-C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Release\BuyingListMaker.csprojResolveAssemblyReference.cache
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Release\BuyingListMaker.dll
 bin\Release\Mono.Android.pdb
 bin\Release\mscorlib.pdb

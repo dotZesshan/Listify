@@ -25,6 +25,7 @@ namespace BuyingListMaker
         public static Typeface STRIKE_THROUGH;
         private string _listName = null;
         private bool _init;
+        private int _position = -1;
         private TextView _totalTextView;
 
         protected override void OnCreate(Bundle bundle)
@@ -34,7 +35,8 @@ namespace BuyingListMaker
             SetContentView(Resource.Layout.Items);
             
             _listName = Intent.GetStringExtra("ListName") ?? "Data not available";
-            this.Title =  "Category: " + _listName;
+            _position = Intent.GetIntExtra("Position", -1);
+            this.Title =  "MyList: " + _listName;
         }
 
         protected override void OnPause()
@@ -42,10 +44,12 @@ namespace BuyingListMaker
             base.OnPause();
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
             ISharedPreferencesEditor editor = prefs.Edit();
-            editor.PutString(_listName, string.Join(",", _adapter.GetAllItems()));
-            editor.PutString(_listName + "MarkingList", string.Join(",", _adapter.GetAllMarksMapping()));
-            editor.PutString(_listName + "PriceList", string.Join(",", _adapter.GetAllPriceItems()));
-            //editor.PutString(_listName + "total", Convert.ToString(_adapter.GetPriceTotal()));
+
+            var saveName = _position != -1 ? _listName + _position : _listName;
+            editor.PutString(saveName, string.Join(",", _adapter.GetAllItems()));
+            editor.PutString(saveName + "MarkingList", string.Join(",", _adapter.GetAllMarksMapping()));
+            editor.PutString(saveName + "PriceList", string.Join(",", _adapter.GetAllPriceItems()));
+            //editor.PutString(saveName + "total", Convert.ToString(_adapter.GetPriceTotal()));
             editor.Apply();    // applies changes synchronously on older APIs
         }
 
@@ -64,15 +68,17 @@ namespace BuyingListMaker
             STRIKE_THROUGH = Typeface.CreateFromAsset(Assets, "bptypewritestrikethrough.ttf");
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
 
-            var storedItemString = prefs.GetString(_listName, null);
+            var saveName = _position != -1 ? _listName + _position : _listName;
+
+            var storedItemString = prefs.GetString(saveName, null);
             var storedItemListData = !string.IsNullOrEmpty(storedItemString) ? storedItemString.Split(new[] { "," }, StringSplitOptions.None).ToList() : null;
             var items = storedItemListData ?? new List<string>();
 
-            var markingListString = prefs.GetString(_listName + "MarkingList", null);
+            var markingListString = prefs.GetString(saveName + "MarkingList", null);
             var storedMarkingListData = !string.IsNullOrEmpty(markingListString) ? markingListString.Split(new[] { "," }, StringSplitOptions.None).Select(s => Convert.ToInt32(s)).ToList() : null;
             var markingElements = storedMarkingListData ?? new List<int>();
 
-            var priceListString = prefs.GetString(_listName + "PriceList", null);
+            var priceListString = prefs.GetString(saveName + "PriceList", null);
             var priceListData = !string.IsNullOrEmpty(priceListString) ? priceListString.Split(new[] { "," }, StringSplitOptions.None).Select(s => Convert.ToInt32(s)).ToList() : null;
             var priceList = priceListData ?? new List<int>();
             
@@ -85,6 +91,8 @@ namespace BuyingListMaker
             _totalTextView = FindViewById<TextView>(Resource.Id.TotalValue);
             _totalTextView.Text = Convert.ToString(_adapter.GetPriceTotal());
             FindViewById<TextView>(Resource.Id.PriceEditText).InputType = Android.Text.InputTypes.ClassNumber;
+            if(_adapter.GetListCount() <= 0)
+                        FindViewById<View>(Resource.Id.TotalLayout).Visibility = ViewStates.Invisible;
         }
 
         private void ListViewOnItemLongClick(object sender, AdapterView.ItemLongClickEventArgs itemLongClickEventArgs)
@@ -185,6 +193,9 @@ namespace BuyingListMaker
                     _adapter.RemovePrice(position);
                     _adapter.RemoveMarkMap(position);
                     _adapter.RemoveItem(position);
+                    
+                    if (_adapter.GetListCount() <= 0)
+                        FindViewById<View>(Resource.Id.TotalLayout).Visibility = ViewStates.Invisible;
                     RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
                 }
             });
@@ -207,6 +218,7 @@ namespace BuyingListMaker
                     _adapter.AddMarkMap(-1);
                     _adapter.AddItem(text);
                     _totalTextView.Text = Convert.ToString(_adapter.GetPriceTotal());
+                    FindViewById<View>(Resource.Id.TotalLayout).Visibility = ViewStates.Visible;
                     RunOnUiThread(() =>
                     {
                         _adapter.NotifyDataSetChanged();

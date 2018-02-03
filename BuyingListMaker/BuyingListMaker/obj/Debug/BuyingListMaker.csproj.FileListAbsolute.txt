@@ -40,8 +40,8 @@ C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\o
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\mylistlayout2.xml
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll.mdb
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\android\assets\BuyingListMaker.dll.mdb
-obj\Debug\linksrc\Mono.Android.pdb
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll
+bin\Debug\Mono.Android.pdb
 bin\Debug\mscorlib.pdb
 bin\Debug\System.Core.pdb
 bin\Debug\System.pdb
@@ -53,6 +53,7 @@ bin\Debug\System.ServiceModel.Internals.pdb
 bin\Debug\Mono.Security.pdb
 bin\Debug\System.ComponentModel.Composition.pdb
 obj\Debug\linksrc\BuyingListMaker.dll.mdb
+obj\Debug\linksrc\Mono.Android.pdb
 obj\Debug\linksrc\mscorlib.pdb
 obj\Debug\linksrc\System.Core.pdb
 obj\Debug\linksrc\System.pdb

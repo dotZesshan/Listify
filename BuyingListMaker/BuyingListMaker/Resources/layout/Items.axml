@@ -15,7 +15,7 @@
             android:id="@+id/ItemEditText"
             android:maxLines="1"
             android:maxLength="20"
-            android:hint="Add Thing" />
+            android:hint="Add New Item" />
         <EditText
             android:layout_weight=".2"
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginLeft="10dp"
             android:id="@+id/ItemLable"
-            android:text="Things" />
+            android:text="Items" />
         <TextView
             android:layout_weight=".2"
             android:layout_width="0dp"
@@ -61,7 +61,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/border">
+        android:background="@drawable/border"
+        android:id="@+id/TotalLayout">
         <TextView
             android:layout_weight=".8"
             android:layout_width="0dp"

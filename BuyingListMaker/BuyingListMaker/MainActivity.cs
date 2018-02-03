@@ -202,9 +202,10 @@ namespace BuyingListMaker
 
             if (item != null)
             {
-                Log.Info("ListViewOnItemClick", item.ToString());
+                Log.Info("ListViewOnItemClick", item.ToString() +"|Position" + itemClickEventArgs.Position);
                 var intent = new Intent(this, typeof(ItemsActivity));
                 intent.PutExtra("ListName", item.ToString());
+                intent.PutExtra("Position", itemClickEventArgs.Position);
                 StartActivity(intent);
             }
         }

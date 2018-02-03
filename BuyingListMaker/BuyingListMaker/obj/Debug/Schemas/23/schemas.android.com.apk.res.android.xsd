@@ -2,7 +2,7 @@
 <xs:schema xmlns:android="http://schemas.android.com/apk/res/android" attributeFormDefault="qualified" targetNamespace="http://schemas.android.com/apk/res/android" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation>v23</xs:documentation>
-    <xs:documentation>2/1/2018 10:23:58 PM</xs:documentation>
+    <xs:documentation>2/3/2018 1:20:25 PM</xs:documentation>
   </xs:annotation>
   <xs:attribute name="accessibilityLiveRegion">
     <xs:annotation>
@@ -16829,6 +16829,7 @@
             <xs:enumeration value="@id/PriceEditButton" />
             <xs:enumeration value="@id/PriceEditText" />
             <xs:enumeration value="@id/TotalLable" />
+            <xs:enumeration value="@id/TotalLayout" />
             <xs:enumeration value="@id/TotalValue" />
             <xs:enumeration value="@android:id/accessibilityActionContextClick" />
             <xs:enumeration value="@android:id/accessibilityActionScrollDown" />
