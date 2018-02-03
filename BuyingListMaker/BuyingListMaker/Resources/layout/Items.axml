@@ -70,7 +70,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginLeft="10dp"
             android:id="@+id/TotalLable"
-            android:text="Total" />
+            android:text="Total Sum" />
         <TextView
             android:layout_weight=".2"
             android:layout_width="0dp"

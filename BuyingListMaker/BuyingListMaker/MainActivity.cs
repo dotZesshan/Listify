@@ -88,9 +88,9 @@ namespace BuyingListMaker
                 optionBox.SetMessage("Select one option");
                 var view = optionBox.LayoutInflater.Inflate(Resource.Layout.ListOptions, null);
                 optionBox.SetView(view);
-                optionBox.SetCancelable(false);
+                //optionBox.SetCancelable(false);
 
-                view.FindViewById<Button>(Resource.Id.EditListNameButton).Click += new EventHandler((s, e) => EditListNameOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
+                view.FindViewById<Button>(Resource.Id.EditListButton).Click += new EventHandler((s, e) => EditListNameOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
                 view.FindViewById<Button>(Resource.Id.ListDeleteButton).Click += new EventHandler((s, e) => DeleteOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
                 optionBox.SetButton("Cancle", (o, args) => { });
                 optionBox.Show();
@@ -111,11 +111,13 @@ namespace BuyingListMaker
             var view = editBox.LayoutInflater.Inflate(Resource.Layout.LimitedInputBoxString, null);
             var inputTextField = view.FindViewById<EditText>(Resource.Id.LimitedEditTextString);
             editBox.SetView(view);
-            editBox.SetCancelable(false);
-            
+            //editBox.SetCancelable(false);
+
+            var oldListName = (string)_listView.GetItemAtPosition(position);
+            inputTextField.Text = oldListName;
+
             editBox.SetButton("Done", (o, args) =>
             {
-                var oldListName = (string)_listView.GetItemAtPosition(position);
                 if (!string.IsNullOrEmpty(oldListName))
                 {
                     var newListName = inputTextField.Text;
@@ -123,14 +125,16 @@ namespace BuyingListMaker
                     {
                         _adapter.SetItemName(position, newListName);
                         ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
-                        var storedItemString = prefs.GetString(oldListName, null);
-                        var markingListString = prefs.GetString(oldListName + "MarkingList", null);
-                        var priceListString = prefs.GetString(oldListName + "PriceList", null);
+                        var oldSaveItem = oldListName + position;
+                        var storedItemString = prefs.GetString(oldSaveItem, null);
+                        var markingListString = prefs.GetString(oldSaveItem + "MarkingList", null);
+                        var priceListString = prefs.GetString(oldSaveItem + "PriceList", null);
 
                         ISharedPreferencesEditor editor = prefs.Edit();
-                        editor.PutString(newListName, storedItemString);
-                        editor.PutString(newListName + "MarkingList", markingListString);
-                        editor.PutString(newListName + "PriceList", priceListString);
+                        var newSaveItem = newListName + position;
+                        editor.PutString(newSaveItem, storedItemString);
+                        editor.PutString(newSaveItem + "MarkingList", markingListString);
+                        editor.PutString(newSaveItem + "PriceList", priceListString);
                         //editor.PutString(_listName + "total", Convert.ToString(_adapter.GetPriceTotal()));
                         editor.Apply();    // applies changes synchronously on older APIs
                     }
@@ -152,7 +156,7 @@ namespace BuyingListMaker
                 alterDialog.SetTitle("Delete");
                 alterDialog.SetIcon(Resource.Drawable.Icon);
                 alterDialog.SetMessage("Do you want to delete this item?");
-                alterDialog.SetCancelable(false);
+                //alterDialog.SetCancelable(false);
                 alterDialog.SetButton("Yes", (o, args) =>
                 {
                     var item = _listView.GetItemAtPosition(position);

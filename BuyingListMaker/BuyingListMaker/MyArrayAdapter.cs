@@ -126,6 +126,13 @@ namespace BuyingListMaker
                 _priceList[position] = value;
         }
 
+        public int GetPrice(int position)
+        {
+            if(_priceList != null)
+                return _priceList.Count > position ? _priceList[position] : 0;
+            return 0;
+        }
+
         public void RemovePrice(int position)
         {
             _priceList?.RemoveAt(position);

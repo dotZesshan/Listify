@@ -2,7 +2,7 @@
 <xs:schema xmlns:android="http://schemas.android.com/apk/res/android" attributeFormDefault="qualified" targetNamespace="http://schemas.android.com/apk/res/android" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation>v23</xs:documentation>
-    <xs:documentation>2/3/2018 1:20:25 PM</xs:documentation>
+    <xs:documentation>2/3/2018 2:19:13 PM</xs:documentation>
   </xs:annotation>
   <xs:attribute name="accessibilityLiveRegion">
     <xs:annotation>
@@ -16806,7 +16806,10 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="@+id/" />
             <xs:enumeration value="@+id/checkBox1" />
-            <xs:enumeration value="@id/EditListNameButton" />
+            <xs:enumeration value="@id/EditedNameBox" />
+            <xs:enumeration value="@id/EditedPriceBox" />
+            <xs:enumeration value="@id/EditItemButton" />
+            <xs:enumeration value="@id/EditListButton" />
             <xs:enumeration value="@id/ItemButton" />
             <xs:enumeration value="@id/ItemDeleteButton" />
             <xs:enumeration value="@id/ItemEditText" />
@@ -16825,9 +16828,9 @@
             <xs:enumeration value="@id/ListLayout" />
             <xs:enumeration value="@id/ListName" />
             <xs:enumeration value="@id/ListsView" />
-            <xs:enumeration value="@id/NameEditButton" />
-            <xs:enumeration value="@id/PriceEditButton" />
             <xs:enumeration value="@id/PriceEditText" />
+            <xs:enumeration value="@id/T1" />
+            <xs:enumeration value="@id/T2" />
             <xs:enumeration value="@id/TotalLable" />
             <xs:enumeration value="@id/TotalLayout" />
             <xs:enumeration value="@id/TotalValue" />

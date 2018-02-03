@@ -106,9 +106,8 @@ namespace BuyingListMaker
                 optionBox.SetMessage("Select one option");
                 var view = optionBox.LayoutInflater.Inflate(Resource.Layout.ItemOptions, null);
                 optionBox.SetView(view);
-                optionBox.SetCancelable(false);
-                view.FindViewById<Button>(Resource.Id.NameEditButton).Click += new EventHandler((s, e) => EditNameOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
-                view.FindViewById<Button>(Resource.Id.PriceEditButton).Click += new EventHandler((s, e) => EditPriceOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
+                //optionBox.SetCancelable(false);
+                view.FindViewById<Button>(Resource.Id.EditItemButton).Click += new EventHandler((s, e) => EditOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
                 view.FindViewById<Button>(Resource.Id.ItemDeleteButton).Click += new EventHandler((s, e) => DeleteOptionClicked(s, e, itemLongClickEventArgs.Position, optionBox));
                 optionBox.SetButton("Cancle", (o, args) => { });
                 optionBox.Show();
@@ -119,57 +118,41 @@ namespace BuyingListMaker
             }
         }
 
-        private void EditNameOptionClicked(object s, EventArgs e, int position, AlertDialog optionBox)
+        private void EditOptionClicked(object s, EventArgs e, int position, AlertDialog optionBox)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             var editBox = builder.Create();
-            editBox.SetTitle("Update Name");
+            editBox.SetTitle("Update Item");
             editBox.SetIcon(Resource.Drawable.Icon);
-            editBox.SetMessage("Enter New Name: ");
-            var view = editBox.LayoutInflater.Inflate(Resource.Layout.LimitedInputBoxString, null);
-            var inputTextField = view.FindViewById<EditText>(Resource.Id.LimitedEditTextString);
+            editBox.SetMessage("Enter New Values: ");
+            var view = editBox.LayoutInflater.Inflate(Resource.Layout.ItemEditLayout, null);
+            var inputTextFieldName = view.FindViewById<EditText>(Resource.Id.EditedNameBox);
+            var inputTextFieldPrice = view.FindViewById<EditText>(Resource.Id.EditedPriceBox);
+            inputTextFieldPrice.InputType = Android.Text.InputTypes.ClassNumber;
+            
+
             editBox.SetView(view);
-            editBox.SetCancelable(false);
+            //editBox.SetCancelable(false);
+
+            var oldListName = (string)_listView.GetItemAtPosition(position);
+            var oldPrice = Convert.ToString(_adapter.GetPrice(position));
+
+            inputTextFieldName.Text = oldListName;
+            inputTextFieldPrice.Text = oldPrice;
 
             editBox.SetButton("Done", (o, args) =>
             {
-            var oldListName = (string)_listView.GetItemAtPosition(position);
+                
                 if (!string.IsNullOrEmpty(oldListName))
                 {
-                    var newListName = inputTextField.Text;
+                    var newListName = inputTextFieldName.Text;
                     if (!string.IsNullOrEmpty(newListName))
                     {
                         _adapter.SetItemName(position, newListName);
-                        RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
                     }
-                }
-            });
-            editBox.SetButton2("Cancle", (o, args) => { });
-            editBox.Show();
-            optionBox.Cancel();
-        }
-
-        private void EditPriceOptionClicked(object s, EventArgs e, int position, AlertDialog optionBox)
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            var editBox = builder.Create();
-            editBox.SetTitle("Update Price");
-            editBox.SetIcon(Resource.Drawable.Icon);
-            editBox.SetMessage("Enter New Price: ");
-            var view = editBox.LayoutInflater.Inflate(Resource.Layout.LimitedInputBoxNumber, null);
-            var inputTextField = view.FindViewById<EditText>(Resource.Id.LimitedEditTextNumber);
-            inputTextField.InputType = Android.Text.InputTypes.ClassNumber;
-            editBox.SetView(view);
-            editBox.SetCancelable(false);
-
-            editBox.SetButton("Done", (o, args) =>
-            {
-                var item = _listView.GetItemAtPosition(position);
-                if (item != null)
-                {
-                    _adapter.SetPrice(position, !string.IsNullOrEmpty(inputTextField.Text) ? Convert.ToInt32(inputTextField.Text) : 0);
-                    _totalTextView.Text = Convert.ToString(_adapter.GetPriceTotal());
+                    _adapter.SetPrice(position, !string.IsNullOrEmpty(inputTextFieldPrice.Text) ? Convert.ToInt32(inputTextFieldPrice.Text) : 0);
                     RunOnUiThread(() => { _adapter.NotifyDataSetChanged(); });
+                    _totalTextView.Text = Convert.ToString(_adapter.GetPriceTotal());
                 }
             });
             editBox.SetButton2("Cancle", (o, args) => { });
@@ -184,7 +167,7 @@ namespace BuyingListMaker
             deleteBox.SetTitle("Delete");
             deleteBox.SetIcon(Resource.Drawable.Icon);
             deleteBox.SetMessage("Do you want to delete this item?");
-            deleteBox.SetCancelable(false);
+            //deleteBox.SetCancelable(false);
             deleteBox.SetButton("Yes", (p, argsp) =>
             {
                 var item = _listView.GetItemAtPosition(position);

@@ -38,8 +38,7 @@ C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\o
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\limitedinputboxstring.xml
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\limitedinputboxnumber.xml
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\mylistlayout2.xml
-C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll.mdb
-C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\android\assets\BuyingListMaker.dll.mdb
+C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\obj\Debug\res\layout\itemeditlayout.xml
 C:\Users\zeeshan.khan\Documents\GitHub\Listify\BuyingListMaker\BuyingListMaker\bin\Debug\BuyingListMaker.dll
 bin\Debug\Mono.Android.pdb
 bin\Debug\mscorlib.pdb

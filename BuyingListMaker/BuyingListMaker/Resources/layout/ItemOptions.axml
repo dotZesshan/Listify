@@ -3,19 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <Button
-        android:text="Edit Name"
-        android:id="@+id/NameEditButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <Button
-        android:text="Edit Price"
-        android:id="@+id/PriceEditButton"
+        android:text="Edit"
+        android:id="@+id/EditItemButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
     <Button
         android:text="Delete"
         android:id="@+id/ItemDeleteButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 </LinearLayout>
